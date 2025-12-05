@@ -34,18 +34,15 @@ app = FastAPI(
 )
 
 # Rate Limiter Setup (Enabled)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+# Rate Limiter Setup (Disabled for stability)
+# app.state.limiter = limiter
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware
-# Restrict to trusted domains in production
+# Allow all origins for stability
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://elon-musk-ai.vercel.app", 
-        "http://localhost:3000",
-        "http://127.0.0.1:3000"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
