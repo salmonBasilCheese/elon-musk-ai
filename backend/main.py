@@ -30,15 +30,19 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Rate Limiter Setup (Disabled for troubleshooting)
-# app.state.limiter = limiter
-# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+# Rate Limiter Setup (Enabled)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware
-# Allow all origins to prevent "Failed to fetch" errors from Vercel dynamic URLs
+# Restrict to trusted domains in production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://elon-musk-ai.vercel.app", 
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
