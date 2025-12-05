@@ -22,10 +22,7 @@ thinking_engine = ThinkingEngine()
 openai_client = OpenAIClient()
 usage_tracker = usage_tracker
 
-class ChatMessage(BaseModel):
 
-
-class ChatMessage(BaseModel):
     """Single chat message"""
     role: str = Field(..., description="Message role: 'user' or 'assistant'")
     content: str = Field(..., description="Message content")
