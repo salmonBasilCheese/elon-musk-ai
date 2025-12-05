@@ -23,6 +23,13 @@ async def lifespan(app: FastAPI):
     logger.info("👋 Shutting down Elon AI Backend...")
 
 
+app = FastAPI(
+    title="Elon-Inspired Strategic Dialogue AI",
+    description="マスク的思考スタイルで回答するAI対話エンジン",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
 # Rate Limiter Setup (Disabled for troubleshooting)
 # app.state.limiter = limiter
 # app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
