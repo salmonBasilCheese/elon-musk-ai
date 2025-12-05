@@ -13,7 +13,7 @@ import logging
 from services.thinking_engine import ThinkingEngine
 from services.openai_client import OpenAIClient
 from services.usage_tracker import usage_tracker
-from rate_limiter import limiter
+# from rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -46,7 +46,7 @@ class ChatResponse(BaseModel):
 
 
 @router.post("/chat", response_model=ChatResponse)
-@limiter.limit("20/minute")
+# @limiter.limit("20/minute")
 async def chat(request: ChatRequest, req: Request):
     """
     Main chat endpoint
@@ -108,7 +108,7 @@ async def chat(request: ChatRequest, req: Request):
 
 
 @router.post("/chat/stream")
-@limiter.limit("20/minute")
+# @limiter.limit("20/minute")
 async def chat_stream(request: ChatRequest, req: Request):
     """
     Streaming chat endpoint for real-time responses

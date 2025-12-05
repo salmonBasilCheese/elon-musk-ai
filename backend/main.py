@@ -23,19 +23,9 @@ async def lifespan(app: FastAPI):
     logger.info("👋 Shutting down Elon AI Backend...")
 
 
-from slowapi import _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from fastapi import Request
-from rate_limiter import limiter
-
-app = FastAPI(
-    title="Elon-Inspired Strategic Dialogue AI",
-    description="マスク的思考スタイルで回答するAI対話エンジン",
-    version="1.0.0",
-    lifespan=lifespan
-)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+# Rate Limiter Setup (Disabled for troubleshooting)
+# app.state.limiter = limiter
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware
 # Allow all origins to prevent "Failed to fetch" errors from Vercel dynamic URLs
