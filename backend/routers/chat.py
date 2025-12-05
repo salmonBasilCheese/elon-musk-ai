@@ -7,21 +7,6 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime
-import asyncio
-import logging
-
-from services.thinking_engine import ThinkingEngine
-from services.openai_client import OpenAIClient
-from services.usage_tracker import usage_tracker
-from rate_limiter import limiter
-
-
-
-# Initialize services
-thinking_engine = ThinkingEngine()
-openai_client = OpenAIClient()
-usage_tracker = usage_tracker
-
 
 
 class ChatMessage(BaseModel):
