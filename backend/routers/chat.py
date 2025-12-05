@@ -2,7 +2,7 @@
 Chat API Router
 Handles conversation endpoints for the Elon AI dialogue system
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List
@@ -13,6 +13,7 @@ import logging
 from services.thinking_engine import ThinkingEngine
 from services.openai_client import OpenAIClient
 from services.usage_tracker import usage_tracker
+from rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -45,7 +46,8 @@ class ChatResponse(BaseModel):
 
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
+@limiter.limit("10/minute")
+async def chat(request: ChatRequest, req: Request):
     """
     Main chat endpoint
     Processes user message through Musk-style thinking engine
@@ -106,7 +108,8 @@ async def chat(request: ChatRequest):
 
 
 @router.post("/chat/stream")
-async def chat_stream(request: ChatRequest):
+@limiter.limit("10/minute")
+async def chat_stream(request: ChatRequest, req: Request):
     """
     Streaming chat endpoint for real-time responses
     Rate limited to stay within free tier

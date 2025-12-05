@@ -23,18 +23,29 @@ async def lifespan(app: FastAPI):
     logger.info("👋 Shutting down Elon AI Backend...")
 
 
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from fastapi import Request
+from rate_limiter import limiter
+
 app = FastAPI(
     title="Elon-Inspired Strategic Dialogue AI",
     description="マスク的思考スタイルで回答するAI対話エンジン",
     version="1.0.0",
     lifespan=lifespan
 )
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware
-# CORS middleware
+# Restrict to trusted domains in production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for production deployment (Vercel)
+    allow_origins=[
+        "https://elon-musk-ai.vercel.app", 
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
