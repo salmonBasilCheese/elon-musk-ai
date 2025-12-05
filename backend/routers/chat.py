@@ -15,12 +15,14 @@ from services.openai_client import OpenAIClient
 from services.usage_tracker import usage_tracker
 from rate_limiter import limiter
 
-logger = logging.getLogger(__name__)
-# Duplicate lines removed
+
 
 # Initialize services
 thinking_engine = ThinkingEngine()
 openai_client = OpenAIClient()
+usage_tracker = usage_tracker
+
+class ChatMessage(BaseModel):
 
 
 class ChatMessage(BaseModel):
