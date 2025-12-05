@@ -46,7 +46,7 @@ class ChatResponse(BaseModel):
 
 
 @router.post("/chat", response_model=ChatResponse)
-@limiter.limit("10/minute")
+@limiter.limit("20/minute")
 async def chat(request: ChatRequest, req: Request):
     """
     Main chat endpoint
@@ -108,7 +108,7 @@ async def chat(request: ChatRequest, req: Request):
 
 
 @router.post("/chat/stream")
-@limiter.limit("10/minute")
+@limiter.limit("20/minute")
 async def chat_stream(request: ChatRequest, req: Request):
     """
     Streaming chat endpoint for real-time responses
