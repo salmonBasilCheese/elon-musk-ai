@@ -20,7 +20,9 @@ router = APIRouter()
 
 # Initialize services
 thinking_engine = ThinkingEngine()
-openai_client = OpenAIClient()class ChatMessage(BaseModel):
+openai_client = OpenAIClient()
+
+class ChatMessage(BaseModel):
     """Single chat message"""
     role: str = Field(..., description="Message role: 'user' or 'assistant'")
     content: str = Field(..., description="Message content")
